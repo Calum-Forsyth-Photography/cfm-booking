@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Professional sports photography and media for fast-paced action — ice hockey, motorsport, combat sports, gymnastics, baseball and more. Game coverage, headshots, video, and season packages across Scotland. Book Calum Forsyth Media today." />
+  <title>Book a Service – Calum Forsyth Media</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold: #C9A84C; --gold-light: #E8C96A; --gold-dark: #9A7530;
+      --black: #0A0A0A; --dark: #111111; --dark2: #1A1A1A; --dark3: #222222;
+      --border: rgba(201,168,76,0.25); --text: #F5F0E8; --muted: rgba(245,240,232,0.5);
+    }
+    html, body { min-height: 100%; background: var(--black); }
+    body { color: var(--text); font-family: 'Outfit', sans-serif; padding-bottom: 4rem; }
+
+    /* HEADER */
+    .bk-hdr { background: var(--dark); border-bottom: 1px solid var(--border); padding: 2rem 2rem 1.5rem; text-align: center; }
+    .logo-big { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 6vw, 3rem); letter-spacing: .08em; line-height: 1; color: var(--text); }
+    .logo-big span { color: var(--gold); }
+    .logo-med { font-family: 'Bebas Neue', sans-serif; font-size: clamp(.9rem, 2.5vw, 1.2rem); letter-spacing: .3em; color: var(--gold); }
+    .tagline { font-size: .7rem; letter-spacing: .22em; color: var(--muted); margin-top: .4rem; text-transform: uppercase; }
+    .bk-ttl { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: .18em; color: var(--gold); margin-top: 1rem; }
+
+    /* STEPS */
+    .steps { display: flex; justify-content: center; padding: 1.5rem 2rem 0; max-width: 700px; margin: 0 auto; }
+    .step { flex: 1; text-align: center; position: relative; }
+    .step:not(:last-child)::after { content: ''; position: absolute; top: 14px; right: -50%; width: 100%; height: 1px; background: var(--border); z-index: 0; }
+    .step-num { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border); background: var(--dark2); font-size: .75rem; font-weight: 500; display: flex; align-items: center; justify-content: center; margin: 0 auto .4rem; position: relative; z-index: 1; transition: all .3s; color: var(--muted); }
+    .step.active .step-num { background: var(--gold); border-color: var(--gold); color: var(--black); }
+    .step.done .step-num { background: var(--gold-dark); border-color: var(--gold-dark); color: var(--text); }
+    .step-lbl { font-size: .65rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+    .step.active .step-lbl { color: var(--gold); }
+
+    /* BODY */
+    .body { max-width: 700px; margin: 0 auto; padding: 2rem 1.5rem 0; }
+    .sec { display: none; }
+    .sec.active { display: block; animation: fi .3s ease; }
+    @keyframes fi { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    .sec-ttl { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: .12em; color: var(--gold); margin-bottom: .3rem; }
+    .sec-sub { font-size: .8rem; color: var(--muted); margin-bottom: 1.5rem; letter-spacing: .03em; }
+    .sec-lbl { font-size: .65rem; letter-spacing: .15em; text-transform: uppercase; color: var(--gold); margin-bottom: .8rem; opacity: .8; }
+    .divider { height: 1px; background: var(--border); margin: 1.5rem 0; }
+
+    /* SERVICE CARDS */
+    .svc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1rem; }
+    @media (max-width: 480px) { .svc-grid { grid-template-columns: 1fr; } }
+    .svc-card { background: var(--dark2); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; cursor: pointer; transition: all .2s; position: relative; overflow: visible; }
+    .svc-card:hover { border-color: var(--gold); background: var(--dark3); }
+    .svc-card.selected { border-color: var(--gold); background: rgba(201,168,76,.08); }
+    .svc-card.selected::before { content: '✓'; position: absolute; top: 8px; right: 28px; font-size: .7rem; color: var(--gold); font-weight: 600; }
+    .svc-cat { font-size: .6rem; letter-spacing: .15em; text-transform: uppercase; color: var(--gold); margin-bottom: .3rem; opacity: .8; }
+    .svc-name { font-size: .9rem; font-weight: 500; color: var(--text); margin-bottom: .2rem; line-height: 1.3; padding-right: 22px; }
+    .svc-desc { font-size: .72rem; color: var(--muted); line-height: 1.4; margin-bottom: .5rem; }
+    .svc-price { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; color: var(--gold); letter-spacing: .05em; }
+
+    /* INFO TOOLTIP */
+    .info-btn { position: absolute; top: 8px; right: 8px; width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--border); background: var(--dark3); color: var(--gold); font-size: .65rem; font-weight: 600; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; }
+    .tooltip { display: none; position: absolute; top: 0; right: 28px; width: 200px; background: var(--dark3); border: 1px solid var(--gold); border-radius: 6px; padding: .7rem .9rem; font-size: .75rem; color: var(--text); line-height: 1.5; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,.5); }
+    .info-btn:hover .tooltip { display: block; }
+
+    /* SEASON CARDS */
+    .season-card { background: var(--dark2); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem 1.2rem 1rem; cursor: pointer; transition: all .2s; position: relative; margin-bottom: 10px; overflow: visible; }
+    .season-card:hover { border-color: var(--gold); }
+    .season-card.selected { border-color: var(--gold); background: rgba(201,168,76,.08); }
+    .season-card.selected .sel-tag { display: block; }
+    .sel-tag { display: none; position: absolute; top: 12px; right: 36px; font-size: .65rem; letter-spacing: .1em; color: var(--gold); font-weight: 500; }
+    .s-badge { display: inline-block; font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; padding: 3px 8px; border-radius: 3px; margin-bottom: .5rem; }
+    .badge-b { background: rgba(160,100,40,.3); color: #CD7F32; border: 1px solid rgba(160,100,40,.4); }
+    .badge-s { background: rgba(160,160,160,.2); color: #C0C0C0; border: 1px solid rgba(160,160,160,.3); }
+    .badge-g { background: rgba(201,168,76,.2); color: var(--gold-light); border: 1px solid var(--border); }
+    .s-name { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: .3rem; }
+    .s-inc { font-size: .75rem; color: var(--muted); line-height: 1.6; margin-bottom: .6rem; }
+    .s-price { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: var(--gold); }
+    .s-price span { font-family: 'Outfit', sans-serif; font-size: .7rem; color: var(--muted); margin-left: 4px; }
+    .pri-tag { display: inline-flex; align-items: center; gap: 4px; font-size: .6rem; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--border); padding: 2px 8px; border-radius: 3px; margin-bottom: .5rem; }
+
+    /* ADDONS */
+    .addons-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    @media (max-width: 480px) { .addons-grid { grid-template-columns: 1fr; } }
+    .addon-card { background: var(--dark2); border: 1px solid var(--border); border-radius: 8px; padding: .9rem; cursor: pointer; transition: all .2s; position: relative; overflow: visible; }
+    .addon-card:hover { border-color: var(--gold); }
+    .addon-card.selected { border-color: var(--gold); background: rgba(201,168,76,.08); }
+    .addon-card.selected::before { content: '✓'; position: absolute; top: 8px; right: 28px; font-size: .7rem; color: var(--gold); }
+    .addon-name { font-size: .85rem; font-weight: 500; margin-bottom: .2rem; padding-right: 22px; }
+    .addon-desc { font-size: .7rem; color: var(--muted); line-height: 1.4; margin-bottom: .4rem; }
+    .addon-price { font-size: .85rem; color: var(--gold); font-weight: 500; }
+
+    /* TRAVEL */
+    .travel-row { background: var(--dark2); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; margin-top: 10px; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .travel-lbl { font-size: .85rem; font-weight: 500; flex: 1; min-width: 140px; }
+    .travel-sub { font-size: .7rem; color: var(--muted); }
+    .travel-inp { width: 70px; background: var(--dark3); border: 1px solid var(--border); border-radius: 5px; color: var(--text); font-family: 'Outfit', sans-serif; font-size: .9rem; padding: 6px 10px; text-align: center; outline: none; }
+    .travel-inp:focus { border-color: var(--gold); }
+    .travel-cost { font-size: .8rem; color: var(--gold); font-weight: 500; min-width: 70px; text-align: right; }
+
+    /* SUMMARY */
+    .summary { background: var(--dark2); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem; margin-bottom: 1.5rem; }
+    .sum-line { display: flex; justify-content: space-between; font-size: .82rem; padding: 5px 0; border-bottom: 1px solid rgba(201,168,76,.1); color: var(--muted); }
+    .sum-line:last-child { border-bottom: none; }
+    .sum-total { color: var(--text); font-weight: 600; font-size: .95rem; padding-top: 10px; }
+    .sum-total .sv { color: var(--gold); font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: .05em; }
+
+    /* FORM */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1rem; }
+    @media (max-width: 540px) { .form-grid { grid-template-columns: 1fr; } .fg.full { grid-column: 1; } }
+    .fg { display: flex; flex-direction: column; gap: 5px; }
+    .fg.full { grid-column: 1 / -1; }
+    .flbl { font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+    .finp, .fsel, .ftxt { background: var(--dark2); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-family: 'Outfit', sans-serif; font-size: .88rem; padding: 10px 12px; width: 100%; transition: border-color .2s; outline: none; }
+    .finp:focus, .fsel:focus, .ftxt:focus { border-color: var(--gold); }
+    .fsel option { background: var(--dark2); color: var(--text); }
+    .ftxt { resize: vertical; min-height: 90px; }
+
+    /* NAV BUTTONS */
+    .bk-nav { display: flex; gap: 10px; margin-top: 1.5rem; }
+    .btn-back { background: transparent; border: 1px solid var(--border); border-radius: 6px; color: var(--muted); font-family: 'Outfit', sans-serif; font-size: .85rem; padding: 10px 20px; cursor: pointer; transition: all .2s; }
+    .btn-back:hover { border-color: var(--gold); color: var(--text); }
+    .btn-next { flex: 1; background: var(--gold); border: none; border-radius: 6px; color: var(--black); font-family: 'Outfit', sans-serif; font-size: .9rem; font-weight: 600; padding: 12px 24px; cursor: pointer; letter-spacing: .05em; transition: all .2s; }
+    .btn-next:hover { background: var(--gold-light); }
+    .btn-next:disabled { opacity: .4; cursor: not-allowed; }
+
+    /* CONTRACT */
+    .contract-box { background: var(--dark2); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem; margin-bottom: 1rem; }
+    .contract-row { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .contract-info { flex: 1; min-width: 200px; }
+    .contract-title { font-size: .9rem; font-weight: 600; color: var(--text); margin-bottom: .2rem; }
+    .contract-sub { font-size: .72rem; color: var(--muted); line-height: 1.4; }
+    .contract-link { display: inline-flex; align-items: center; gap: 6px; background: transparent; border: 1px solid var(--gold); border-radius: 6px; color: var(--gold); font-family: 'Outfit', sans-serif; font-size: .8rem; padding: 8px 14px; cursor: pointer; transition: all .2s; text-decoration: none; white-space: nowrap; }
+    .contract-link:hover { background: rgba(201,168,76,.1); }
+    .contract-link.viewed { background: rgba(201,168,76,.1); border-color: var(--gold-light); color: var(--gold-light); }
+    .contract-check { display: flex; align-items: flex-start; gap: .7rem; margin-top: .8rem; font-size: .8rem; color: var(--muted); line-height: 1.5; }
+    .contract-check input { margin-top: 2px; accent-color: var(--gold); }
+    .contract-warn { font-size: .72rem; color: #E2714A; margin-top: .5rem; display: none; }
+
+    /* DATE NOTICE */
+    .date-notice { background: rgba(201,168,76,.06); border: 1px solid var(--border); border-radius: 6px; padding: .8rem 1rem; margin-top: .6rem; font-size: .75rem; color: var(--muted); line-height: 1.6; display: none; }
+    .date-notice strong { color: var(--gold-light); }
+
+    /* CONFIRMATION */
+    .confirm-box { text-align: center; padding: 2rem 1rem; }
+    .conf-icon { width: 56px; height: 56px; border-radius: 50%; background: rgba(201,168,76,.15); border: 1px solid var(--gold); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem; }
+    .conf-ttl { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: .1em; color: var(--gold); margin-bottom: .5rem; }
+    .conf-sub { font-size: .85rem; color: var(--muted); line-height: 1.6; max-width: 480px; margin: 0 auto; }
+    .conf-contract-notice { background: rgba(201,168,76,.08); border: 1px solid var(--gold); border-radius: 8px; padding: 1rem 1.2rem; margin: 1.2rem 0; font-size: .82rem; color: var(--text); line-height: 1.7; text-align: left; }
+    .conf-contract-notice strong { color: var(--gold); }
+    .conf-detail { margin-top: 1rem; padding: 1rem; background: var(--dark2); border: 1px solid var(--border); border-radius: 8px; font-size: .78rem; color: var(--muted); line-height: 1.8; text-align: left; }
+    .conf-footer { margin-top: 1rem; font-size: .7rem; letter-spacing: .08em; color: var(--gold); opacity: .7; }
+
+    /* SENDING OVERLAY */
+    .sending-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.8); align-items: center; justify-content: center; z-index: 999; flex-direction: column; gap: 1rem; }
+    .sending-overlay.show { display: flex; }
+    .spinner { width: 40px; height: 40px; border: 3px solid var(--border); border-top-color: var(--gold); border-radius: 50%; animation: spin .8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .sending-text { color: var(--gold); font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: .15em; }
+
+    /* ERROR */
+    .error-msg { background: rgba(226,113,74,.1); border: 1px solid #E2714A; border-radius: 6px; padding: .8rem 1rem; font-size: .8rem; color: #E2714A; margin-top: .8rem; display: none; }
+
+
+    /* MEDIA DAY CARDS */
+    .media-card { background: var(--dark2); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem 1.2rem 1rem; cursor: pointer; transition: all .2s; position: relative; margin-bottom: 10px; overflow: visible; }
+    .media-card:hover { border-color: var(--gold); }
+    .media-card.selected { border-color: var(--gold); background: rgba(201,168,76,.08); }
+    .media-card.selected .sel-tag { display: block; }
+    .media-tier { display: inline-block; font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; padding: 3px 8px; border-radius: 3px; margin-bottom: .5rem; background: rgba(201,168,76,.15); color: var(--gold-light); border: 1px solid var(--border); }
+    .media-name { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: .3rem; }
+    .media-inc { font-size: .75rem; color: var(--muted); line-height: 1.7; margin-bottom: .6rem; }
+    .media-price { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: var(--gold); }
+    .media-price span { font-family: 'Outfit', sans-serif; font-size: .7rem; color: var(--muted); margin-left: 4px; }
+    .media-note { font-size: .68rem; color: var(--muted); margin-top: .4rem; font-style: italic; }
+
+    /* PROMO CODE */
+    .promo-row { background: var(--dark2); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; margin-top: 10px; }
+    .promo-inner { display: flex; gap: 8px; align-items: center; }
+    .promo-inp { flex: 1; background: var(--dark3); border: 1px solid var(--border); border-radius: 5px; color: var(--text); font-family: 'Outfit', sans-serif; font-size: .88rem; padding: 9px 12px; outline: none; text-transform: uppercase; letter-spacing: .05em; }
+    .promo-inp:focus { border-color: var(--gold); }
+    .promo-btn { background: transparent; border: 1px solid var(--gold); border-radius: 5px; color: var(--gold); font-family: 'Outfit', sans-serif; font-size: .82rem; font-weight: 600; padding: 9px 16px; cursor: pointer; transition: all .2s; white-space: nowrap; }
+    .promo-btn:hover { background: rgba(201,168,76,.1); }
+    .promo-success { font-size: .78rem; color: #6FCF97; margin-top: .5rem; display: none; }
+    .promo-error { font-size: .78rem; color: #E2714A; margin-top: .5rem; display: none; }
+    .promo-applied { display: flex; justify-content: space-between; align-items: center; margin-top: .5rem; font-size: .78rem; display: none; }
+    .promo-applied-text { color: #6FCF97; }
+    .promo-remove { background: none; border: none; color: var(--muted); font-size: .72rem; cursor: pointer; text-decoration: underline; }
+    .promo-remove:hover { color: #E2714A; }
+  </style>
+</head>
+<body>
+
+<div class="sending-overlay" id="sending-overlay">
+  <div class="spinner"></div>
+  <div class="sending-text">Sending your enquiry...</div>
+</div>
+
+<header class="bk-hdr">
+  <div class="logo-big">CALUM <span>FORSYTH</span></div>
+  <div class="logo-med">MEDIA</div>
+  <div class="tagline">Sports Photography · Graphics · Content</div>
+  <div class="bk-ttl">Book a Service</div>
+</header>
+
+<div style="background:var(--dark);border-bottom:1px solid var(--border);padding:1.2rem 2rem;">
+  <div style="max-width:700px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:.7rem;">
+    <div style="display:flex;align-items:flex-start;gap:.6rem;font-size:.75rem;color:var(--muted);line-height:1.5;">
+      <span style="color:var(--gold);font-size:1rem;margin-top:1px;">✓</span>
+      <span><strong style="color:var(--text);">Professional equipment</strong><br>Canon R10 with fast telephoto glass, built for sports</span>
+    </div>
+    <div style="display:flex;align-items:flex-start;gap:.6rem;font-size:.75rem;color:var(--muted);line-height:1.5;">
+      <span style="color:var(--gold);font-size:1rem;margin-top:1px;">✓</span>
+      <span><strong style="color:var(--text);">Fast turnaround</strong><br>Standard 5-day delivery, 48hr rush available</span>
+    </div>
+    <div style="display:flex;align-items:flex-start;gap:.6rem;font-size:.75rem;color:var(--muted);line-height:1.5;">
+      <span style="color:var(--gold);font-size:1rem;margin-top:1px;">✓</span>
+      <span><strong style="color:var(--text);">Sports specialist</strong><br>Experienced in ice hockey and expanding across Scotland</span>
+    </div>
+    <div style="display:flex;align-items:flex-start;gap:.6rem;font-size:.75rem;color:var(--muted);line-height:1.5;">
+      <span style="color:var(--gold);font-size:1rem;margin-top:1px;">✓</span>
+      <span><strong style="color:var(--text);">Priority season clients</strong><br>Season package holders get guaranteed date holds</span>
+    </div>
+  </div>
+</div>
+
+<div style="background:var(--black);border-bottom:1px solid var(--border);padding:1.4rem 2rem;">
+  <div style="max-width:700px;margin:0 auto;">
+    <div style="font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);opacity:.8;margin-bottom:.9rem;text-align:center;">What clubs say</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;padding:.9rem 1rem;">
+        <div style="font-size:.78rem;color:var(--muted);line-height:1.6;margin-bottom:.5rem;">"We have used Calum on several occasions to capture our teams action shots during games, training sessions, and also professional headshots. He is consistently professional, flexible, and accommodating to the fast-paced nature of the sport, always delivering high-standard photos that elevate our social media presence. We couldn't recommend him more highly for capturing stunning and dynamic imagery"</div>
+        <div style="font-size:.7rem;color:var(--gold);font-weight:500;">— Glasgow Mustangs IHC</div>
+      </div>
+      <div style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;padding:.9rem 1rem;">
+        <div style="font-size:.78rem;color:var(--muted);line-height:1.6;margin-bottom:.5rem;">"We found working with Calum to be an effortless process, and he was accommodating to our specific needs and requests. Highly recommend!"</div>
+        <div style="font-size:.7rem;color:var(--gold);font-weight:500;">— Renfrewshire Ravens IHC</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="steps">
+  <div class="step active" id="st1"><div class="step-num">1</div><div class="step-lbl">Service</div></div>
+  <div class="step" id="st2"><div class="step-num">2</div><div class="step-lbl">Extras</div></div>
+  <div class="step" id="st3"><div class="step-num">3</div><div class="step-lbl">Details</div></div>
+  <div class="step" id="st4"><div class="step-num">4</div><div class="step-lbl">Confirm</div></div>
+</div>
+
+<main class="body">
+
+  <!-- STEP 1 -->
+  <div class="sec active" id="s1">
+    <div class="sec-ttl">Choose your service(s)</div>
+    <div class="sec-sub">Select one or more services, or choose a season coverage package below</div>
+    <div class="sec-lbl">Individual services</div>
+    <div class="svc-grid">
+
+      <div class="svc-card" data-id="game" data-price="85" data-name="Game Photography" onclick="toggleSvc(this)">
+        <div class="info-btn" onclick="event.stopPropagation()">i<div class="tooltip">Full game coverage from start to finish. Edited gallery of the best action shots delivered via online link within 5 working days.</div></div>
+        <div class="svc-cat">Ice Hockey</div><div class="svc-name">Game Photography</div>
+        <div class="svc-desc">Full game coverage, edited gallery within 5 days</div><div class="svc-price">£85</div>
+      </div>
+
+      <div class="svc-card" data-id="headshot_ind" data-price="55" data-name="Headshots (Individual)" onclick="toggleSvc(this)">
+        <div class="info-btn" onclick="event.stopPropagation()">i<div class="tooltip">Professional headshot session for a single player. Multiple shots, edited and delivered as high-resolution files. Perfect for club profiles and social media.</div></div>
+        <div class="svc-cat">Ice Hockey</div><div class="svc-name">Headshots – Individual</div>
+        <div class="svc-desc">Professional player headshots, edited and delivered</div><div class="svc-price">£55</div>
+      </div>
+
+      <div class="svc-card" data-id="headshot_team" data-price="200" data-name="Headshots (Full Team)" onclick="toggleSvc(this)">
+        <div class="info-btn" onclick="event.stopPropagation()">i<div class="tooltip">Full squad headshot session covering all players and coaching staff. Best value for clubs wanting a consistent look across all player profiles.</div></div>
+        <div class="svc-cat">Ice Hockey</div><div class="svc-name">Headshots – Full Team</div>
+        <div class="svc-desc">Full squad headshot session, best value for clubs</div><div class="svc-price">£200</div>
+      </div>
+
+      <div class="svc-card" data-id="intro_video" data-price="90" data-name="Player Intro Video" onclick="toggleSvc(this)">
+        <div class="info-btn" onclick="event.stopPropagation()">i<div class="tooltip">Cinematic, fully edited player introduction video for pre-game announcements or social media. Typically 30–60 seconds, branded to the club's identity.</div></div>
+        <div class="svc-cat">Video</div><div class="svc-name">Player Intro Video</div>
+        <div class="svc-desc">Cinematic player introduction video, fully edited</div><div class="svc-price">£90</div>
+      </div>
+
+      <div class="svc-card" data-id="social_post" data-price="20" data-name="Social Media Post" onclick="toggleSvc(this)">
+        <div class="info-btn" onclick="event.stopPropagation()">i<div class="tooltip">Professionally designed graphic or photo post for your club's social channels. Includes branded overlays and optimised sizing per platform.</div></div>
+        <div class="svc-cat">Content</div><div class="svc-name">Social Media Post</div>
+        <div class="svc-desc">Designed post for club social channels</div><div class="svc-price">£20 / post</div>
+      </div>
+
+      <div class="svc-card" data-id="social_retainer" data-price="150" data-name="Social Media Retainer" onclick="toggleSvc(this)">
+        <div class="info-btn" onclick="event.stopPropagation()">i<div class="tooltip">Monthly content package providing consistent social media output for your club. Ideal for clubs wanting regular professionally produced content without booking each post individually.</div></div>
+        <div class="svc-cat">Content</div><div class="svc-name">Social Media Retainer</div>
+        <div class="svc-desc">Monthly content package for consistent club presence</div><div class="svc-price">£150 / mo</div>
+      </div>
+
+      <div class="svc-card" data-id="halfday" data-price="200" data-name="Half Day Call-Out" onclick="toggleSvc(this)">
+        <div class="info-btn" onclick="event.stopPropagation()">i<div class="tooltip">Up to 4 hours of photography or video coverage for any sport — gymnastics, combat sports, baseball, and more. Includes basic editing and digital delivery.</div></div>
+        <div class="svc-cat">General Sports</div><div class="svc-name">Half Day Call-Out</div>
+        <div class="svc-desc">Up to 4 hours, any sport — gymnastics, combat, baseball</div><div class="svc-price">£200</div>
+      </div>
+
+      <div class="svc-card" data-id="fullday" data-price="365" data-name="Full Day Call-Out" onclick="toggleSvc(this)">
+        <div class="info-btn" onclick="event.stopPropagation()">i<div class="tooltip">Up to 8 hours of full photography or video coverage for any sport. Ideal for full-day competitions, tournaments, or multi-event days.</div></div>
+        <div class="svc-cat">General Sports</div><div class="svc-name">Full Day Call-Out</div>
+        <div class="svc-desc">Up to 8 hours, any sport — gymnastics, combat, baseball</div><div class="svc-price">£365</div>
+      </div>
+
+    </div>
+
+    <div class="divider"></div>
+    <div class="sec-lbl">Season coverage — priority packages</div>
+
+    <div class="season-card" data-id="bronze" data-price="499" data-name="Bronze Season Package" onclick="toggleSeason(this)">
+      <div class="info-btn" onclick="event.stopPropagation()">i<div class="tooltip">5 games with 2 social posts per game. Includes 48hr gallery turnaround and guaranteed date holds ahead of non-package clients.</div></div>
+      <div class="sel-tag">✓ Selected</div>
+      <div class="s-badge badge-b">Bronze</div><div class="pri-tag">⭐ Priority booking included</div>
+      <div class="s-name">Bronze Season Package</div>
+      <div class="s-inc">5 games · 2 social posts/game · 48hr gallery turnaround · Guaranteed date holds</div>
+      <div class="s-price">£499 <span>/ season</span></div>
+    </div>
+
+    <div class="season-card" data-id="silver" data-price="899" data-name="Silver Season Package" onclick="toggleSeason(this)">
+      <div class="info-btn" onclick="event.stopPropagation()">i<div class="tooltip">10 games with 3 social posts per game, plus one full team headshot session. First refusal on tournament and play-off dates.</div></div>
+      <div class="sel-tag">✓ Selected</div>
+      <div class="s-badge badge-s">Silver</div><div class="pri-tag">⭐ Priority booking included</div>
+      <div class="s-name">Silver Season Package</div>
+      <div class="s-inc">10 games · 3 social posts/game · 1 team headshot session · First refusal on tournaments · 48hr turnaround</div>
+      <div class="s-price">£899 <span>/ season</span></div>
+    </div>
+
+    <div class="season-card" data-id="gold_season" data-price="1499" data-name="Gold Season Package" onclick="toggleSeason(this)">
+      <div class="info-btn" onclick="event.stopPropagation()">i<div class="tooltip">The complete package: unlimited home games, 4 social posts per game, 2 headshot sessions, 1 player intro video, and all play-off/tournament first refusal.</div></div>
+      <div class="sel-tag">✓ Selected</div>
+      <div class="s-badge badge-g">Gold</div><div class="pri-tag">⭐ Priority booking included</div>
+      <div class="s-name">Gold Season Package</div>
+      <div class="s-inc">Unlimited home games · 4 social posts/game · 2 headshot sessions · 1 player intro video · All play-off first refusal · 48hr turnaround</div>
+      <div class="s-price">£1,499 <span>/ season</span></div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="sec-lbl">Pre-season media days — ice hockey</div>
+
+    <div class="media-card" data-id="media_essential" data-price="250" data-name="Media Day – Essential" onclick="toggleMedia(this)">
+      <div class="info-btn" onclick="event.stopPropagation()">i<div class="tooltip">Perfect for clubs wanting a professional look heading into the season without a large budget. All headshots and team photo delivered within 5 working days.</div></div>
+      <div class="sel-tag">✓ Selected</div>
+      <div class="media-tier">Essential</div>
+      <div class="media-name">Essential Media Day</div>
+      <div class="media-inc">✓ Individual player headshots<br>✓ Full squad team photo<br>✓ 5 branded social media graphics<br>✓ Delivered within 5 working days</div>
+      <div class="media-price">£250 <span>/ session</span></div>
+      <div class="media-note">Local clubs (within 5 miles) · Travel charged at £0.45/mile beyond that</div>
+    </div>
+
+    <div class="media-card" data-id="media_standard" data-price="399" data-name="Media Day – Standard" onclick="toggleMedia(this)">
+      <div class="info-btn" onclick="event.stopPropagation()">i<div class="tooltip">The most popular option. Adds action shots from drills and more social media content, giving your club everything needed for a strong season launch across all platforms.</div></div>
+      <div class="sel-tag">✓ Selected</div>
+      <div class="media-tier">Standard</div>
+      <div class="media-name">Standard Media Day</div>
+      <div class="media-inc">✓ Everything in Essential<br>✓ Action shots from drills / warm-up<br>✓ Coaching staff portraits<br>✓ 10 branded social media graphics<br>✓ Matchday graphic template (reusable all season)<br>✓ Delivered within 5 working days</div>
+      <div class="media-price">£399 <span>/ session</span></div>
+      <div class="media-note">Local clubs (within 5 miles) · Travel charged at £0.45/mile beyond that</div>
+    </div>
+
+    <div class="media-card" data-id="media_premium" data-price="699" data-name="Media Day – Premium" onclick="toggleMedia(this)">
+      <div class="info-btn" onclick="event.stopPropagation()">i<div class="tooltip">Ideal for clubs with an active social media presence wanting to launch the season with real impact. Player intro videos filmed on the day and edited within 5 working days.</div></div>
+      <div class="sel-tag">✓ Selected</div>
+      <div class="media-tier">Premium</div>
+      <div class="media-name">Premium Media Day</div>
+      <div class="media-inc">✓ Everything in Standard<br>✓ Up to 5 player intro videos (filmed on day, edited within 5 days)<br>✓ Season launch hype video for social media<br>✓ Unlimited branded social media graphics<br>✓ Delivered within 5 working days</div>
+      <div class="media-price">£699 <span>/ session</span></div>
+      <div class="media-note">Local clubs (within 5 miles) · Travel charged at £0.45/mile beyond that</div>
+    </div>
+
+    <div class="media-card" data-id="media_elite" data-price="999" data-name="Media Day – Elite" onclick="toggleMedia(this)">
+      <div class="info-btn" onclick="event.stopPropagation()">i<div class="tooltip">The complete pre-season package. Full squad intro videos, behind the scenes coverage, and a full set of graphic templates to use consistently throughout the entire season.</div></div>
+      <div class="sel-tag">✓ Selected</div>
+      <div class="media-tier">Elite</div>
+      <div class="media-name">Elite Media Day</div>
+      <div class="media-inc">✓ Everything in Premium<br>✓ Up to 10 player intro videos<br>✓ Full dressing room & behind the scenes coverage<br>✓ Full season graphic template pack<br>✓ Delivered within 5 working days</div>
+      <div class="media-price">£999 <span>/ session</span></div>
+      <div class="media-note">Local clubs (within 5 miles) · Travel charged at £0.45/mile beyond that · Other sports available on request</div>
+    </div>
+
+    <div class="bk-nav">
+      <button class="btn-next" id="btn1" onclick="goTo(2)" disabled>Continue →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="sec" id="s2">
+    <div class="sec-ttl">Add-ons & extras</div>
+    <div class="sec-sub">Enhance your booking with optional extras</div>
+    <div class="addons-grid">
+      <div class="addon-card" data-id="rush" data-price="0" data-pct="25" data-name="Rush Turnaround" onclick="toggleAddon(this)">
+        <div class="info-btn" onclick="event.stopPropagation()">i<div class="tooltip">Guarantees delivery within 48 hours of your shoot. Charged at 25% on top of your booking total.</div></div>
+        <div class="addon-name">Rush Turnaround</div><div class="addon-desc">Delivery within 48 hours of your shoot</div><div class="addon-price">+25% of booking</div>
+      </div>
+      <div class="addon-card" data-id="extra_edit" data-price="50" data-name="Extended Editing" onclick="toggleAddon(this)">
+        <div class="info-btn" onclick="event.stopPropagation()">i<div class="tooltip">Additional retouching, colour grading, and detailed editing beyond the standard included edit.</div></div>
+        <div class="addon-name">Extended Editing</div><div class="addon-desc">Additional retouching and colour work</div><div class="addon-price">+£50</div>
+      </div>
+      <div class="addon-card" data-id="graphics" data-price="30" data-name="Social Graphics Pack" onclick="toggleAddon(this)">
+        <div class="info-btn" onclick="event.stopPropagation()">i<div class="tooltip">Branded graphic overlays, templates, and resized assets for your club's social media platforms.</div></div>
+        <div class="addon-name">Social Graphics Pack</div><div class="addon-desc">Branded overlays and graphics for social posts</div><div class="addon-price">+£30</div>
+      </div>
+      <div class="addon-card" data-id="bts" data-price="40" data-name="Behind the Scenes" onclick="toggleAddon(this)">
+        <div class="info-btn" onclick="event.stopPropagation()">i<div class="tooltip">Behind-the-scenes photos or short video clips captured during your shoot. Great for building engagement on club social media.</div></div>
+        <div class="addon-name">Behind the Scenes</div><div class="addon-desc">BTS photos/video of the shoot itself</div><div class="addon-price">+£40</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="sec-lbl">Travel</div>
+    <div class="travel-row">
+      <div style="flex:1;">
+        <div class="travel-lbl">Travel from Braehead Arena</div>
+        <div class="travel-sub" id="travel-desc">Select a venue on page 3 to calculate travel automatically</div>
+      </div>
+      <div style="text-align:right;">
+        <div class="travel-cost" id="travel-cost">£0.00</div>
+        <div style="font-size:.65rem;color:var(--muted);margin-top:2px;">auto-calculated</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="sec-lbl">Promo code</div>
+    <div class="promo-row">
+      <div class="promo-inner">
+        <input class="promo-inp" id="promo-input" type="text" placeholder="Enter promo code" maxlength="30" />
+        <button class="promo-btn" onclick="applyPromo()">Apply</button>
+      </div>
+      <div class="promo-success" id="promo-success"></div>
+      <div class="promo-error" id="promo-error"></div>
+      <div class="promo-applied" id="promo-applied">
+        <span class="promo-applied-text" id="promo-applied-text"></span>
+        <button class="promo-remove" onclick="removePromo()">Remove</button>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="sec-lbl">Order summary</div>
+    <div class="summary" id="sum2"></div>
+    <div class="bk-nav">
+      <button class="btn-back" onclick="goTo(1)">← Back</button>
+      <button class="btn-next" onclick="goTo(3)">Continue →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="sec" id="s3">
+    <div class="sec-ttl">Your details</div>
+    <div class="sec-sub">We'll use this to confirm your booking and send a summary</div>
+
+    <div style="background:rgba(201,168,76,.06);border:1px solid var(--border);border-radius:8px;padding:.9rem 1.1rem;margin-bottom:1.5rem;font-size:.78rem;color:var(--muted);line-height:1.7;">
+      <strong style="color:var(--gold-light);">Before you submit:</strong> Estimated prices are subject to confirmation. A <strong style="color:var(--text);">50% non-refundable deposit</strong> is required to secure your date — no date is held until the deposit is received. Calum will be in touch to confirm availability and send your invoice.
+    </div>
+
+    <div class="form-grid">
+      <div class="fg"><label class="flbl">First name</label><input class="finp" id="f-first" type="text" placeholder="e.g. Jamie" /></div>
+      <div class="fg"><label class="flbl">Last name</label><input class="finp" id="f-last" type="text" placeholder="e.g. Smith" /></div>
+      <div class="fg full"><label class="flbl">Email address</label><input class="finp" id="f-email" type="email" placeholder="you@email.com" /></div>
+      <div class="fg"><label class="flbl">Phone number <span style="color:#E2714A;font-size:.65rem;">required</span></label><input class="finp" id="f-phone" type="tel" placeholder="+44 7700 000000" /></div>
+      <div class="fg">
+        <label class="flbl">Preferred contact method</label>
+        <select class="fsel" id="f-contact">
+          <option value="">No preference</option>
+          <option>Email</option>
+          <option>Phone call</option>
+          <option>Text message</option>
+          <option>WhatsApp</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label class="flbl">Club / organisation</label>
+        <select class="fsel" id="f-club" onchange="onClubChange()">
+          <option value="">Select or specify in notes</option>
+          <option>Ayrshire Vikings</option>
+          <option>Caledonia Steel Queens</option>
+          <option>Dumfries Demons</option>
+          <option>Dundee Knights</option>
+          <option>Dundee Rockets</option>
+          <option>Edinburgh Knights</option>
+          <option>Edinburgh Lions</option>
+          <option>Glasgow Mustangs</option>
+          <option>Glasgow Stags</option>
+          <option>Glasgow Thistles</option>
+          <option>Hamilton Hawks</option>
+          <option>Kilmarnock Piranhas</option>
+          <option>Lossiemouth Jets</option>
+          <option>Lowland Raiders</option>
+          <option>Renfrewshire Ravens</option>
+          <option>Solway Sharks</option>
+          <option>The Mariners IHC</option>
+          <option>The Warriors</option>
+          <option>Other – please state in additional notes</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label class="flbl">Preferred date <span style="color:#E2714A;font-size:.65rem;">required</span></label>
+        <input class="finp" id="f-date" type="date" oninput="checkDate()" />
+        <div class="date-notice" id="date-notice"><strong>Please note:</strong> Selecting a date does not guarantee availability. If your preferred date is unavailable, please still submit the form and use the <strong>Additional Notes</strong> section to tell us who you are, which club you represent, and what you're looking for — both home and away teams may book coverage of the same fixture, and Calum may be able to accommodate both.</div>
+      </div>
+      <div class="fg">
+        <label class="flbl">Location / venue <span style="color:#E2714A;font-size:.65rem;">required</span></label>
+        <select class="fsel" id="f-venue" onchange="calcTravel()">
+          <option value="">Select or specify in notes</option>
+          <option>Auchenharvie</option>
+          <option>Braehead Arena</option>
+          <option>Dumfries Ice Bowl</option>
+          <option>Dundee Ice Arena</option>
+          <option>Hamilton</option>
+          <option>Murrayfield</option>
+          <option>The Galleon</option>
+          <option>The Peak Stirling</option>
+          <option>Other – please state in additional notes</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label class="flbl">Preferred time</label>
+        <input class="finp" id="f-time" type="time" />
+      </div>
+      <div class="fg">
+        <label class="flbl">How did you hear about us?</label>
+        <select class="fsel" id="f-source">
+          <option value="">Select an option</option>
+          <option>Instagram</option>
+          <option>Facebook</option>
+          <option>TikTok</option>
+          <option>Word of mouth</option>
+          <option>Seen at a game</option>
+          <option>Google search</option>
+          <option>Club recommendation</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="fg full"><label class="flbl">Additional notes</label><textarea class="ftxt" id="f-notes" placeholder="Any specific requirements, requests, or questions..."></textarea></div>
+    </div>
+    <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
+      <label for="f-website">Leave this field blank</label>
+      <input type="text" id="f-website" name="website" tabindex="-1" autocomplete="off" />
+    </div>
+    <div class="divider"></div>
+    <div class="sec-lbl">Final summary</div>
+    <div class="summary" id="sum3"></div>
+    <div class="divider"></div>
+    <div class="sec-lbl">Client contract</div>
+    <div class="contract-box">
+      <div class="contract-row">
+        <div class="contract-info">
+          <div class="contract-title">Calum Forsyth Media – Service Agreement</div>
+          <div class="contract-sub">Please read the contract before submitting. You must confirm you have read and agree to the terms to proceed.</div>
+        </div>
+        <a class="contract-link" id="contract-link" href="CFM_Client_Contract.pdf" onclick="markViewed()" target="_blank">📄 View Contract</a>
+      </div>
+      <div class="contract-check" style="margin-top:.6rem;">
+        <input type="checkbox" id="deposit-confirm" onchange="checkContractAgreement()" />
+        <label for="deposit-confirm">I understand that a <strong>50% non-refundable deposit</strong> is required to secure my booking date, and that no date is held until payment is received.</label>
+      </div>
+      <div class="contract-check">
+        <input type="checkbox" id="contract-agree" onchange="checkContractAgreement()" disabled />
+        <label for="contract-agree">I confirm I have read the Calum Forsyth Media Service Agreement and agree to its terms and conditions.</label>
+      </div>
+      <div class="contract-warn" id="contract-warn">Please view and agree to the contract before submitting your enquiry.</div>
+    </div>
+    <div class="error-msg" id="error-msg">Something went wrong sending your enquiry. Please try again or email <a href="mailto:calumforsythphotography@gmail.com" style="color:#E2714A;">calumforsythphotography@gmail.com</a> directly.</div>
+    <div style="font-size:.7rem;color:var(--muted);line-height:1.6;margin-top:.9rem;text-align:center;">
+      Your details are used only to process this enquiry and confirm your booking, and will not be shared with third parties.
+    </div>
+    <div class="bk-nav">
+      <button class="btn-back" onclick="goTo(2)">← Back</button>
+      <button class="btn-next" id="btn3" onclick="submitBooking()" disabled>Submit Enquiry →</button>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="sec" id="s4">
+    <div class="confirm-box">
+      <div class="conf-icon">✓</div>
+      <div class="conf-ttl">Enquiry Received!</div>
+      <div class="conf-sub">Thanks <span id="conf-name"></span>! Your booking enquiry has been submitted to Calum Forsyth Media. A summary has been sent to <span id="conf-email" style="color:var(--gold);"></span> and Calum will be in touch shortly to confirm availability and next steps.</div>
+      <div class="conf-contract-notice">
+        <strong>📄 Important — Contract Signature Required</strong><br>
+        Your booking is not confirmed until the Client Service Agreement has been signed and returned. Please sign and return it to <strong>calumforsythphotography@gmail.com</strong> at your earliest convenience. Your deposit invoice will also be sent shortly — your date is not held until the deposit is received.
+      </div>
+      <div class="conf-detail" id="conf-summary"></div>
+      <div class="conf-footer">CALUM FORSYTH MEDIA · SPORTS PHOTOGRAPHY · GRAPHICS · CONTENT</div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  (function(){ emailjs.init({ publicKey: "7vczdH_OJ9GYFwwns" }); })();
+
+  let selectedSvcs = [], selectedAddons = [], travelCost = 0, contractViewed = false;
+
+  const VENUE_MILES = {
+    'Braehead Arena':     0,
+    'Auchenharvie':      18,
+    'Dumfries Ice Bowl': 80,
+    'Dundee Ice Arena':  75,
+    'Hamilton':          15,
+    'Murrayfield':       47,
+    'The Galleon':       22,
+    'The Peak Stirling': 30,
+  };
+  let appliedPromo = null;
+
+  const PROMO_CODES = {
+    'MUSTANGS20':   { type: 'percent',      value: 20,  label: '20% discount applied',               restrictClub: 'Glasgow Mustangs' },
+    'MUSTANGSHEAD': { type: 'free_service', service: 'Headshots (Full Team)', label: 'Free full team headshot session added!', restrictClub: 'Glasgow Mustangs' },
+  };
+
+  function applyPromo() {
+    const code = document.getElementById('promo-input').value.trim().toUpperCase();
+    const successEl = document.getElementById('promo-success');
+    const errorEl = document.getElementById('promo-error');
+    const appliedEl = document.getElementById('promo-applied');
+    successEl.style.display = 'none';
+    errorEl.style.display = 'none';
+    appliedEl.style.display = 'none';
+    if (!code) { errorEl.textContent = 'Please enter a promo code.'; errorEl.style.display = 'block'; return; }
+    if (appliedPromo) { errorEl.textContent = 'Only one promo code can be used per booking. Please remove the current code first.'; errorEl.style.display = 'block'; return; }
+    const promo = PROMO_CODES[code];
+    if (promo) {
+      if (promo.restrictClub) {
+        const selectedClub = document.getElementById('f-club') ? document.getElementById('f-club').value : '';
+        // Only block here if a club has already been selected and doesn't match.
+        // Club is chosen on Step 3, which comes after this page, so an empty
+        // value at this point just means we validate again once it's set.
+        if (selectedClub && selectedClub !== promo.restrictClub) {
+          errorEl.textContent = 'This promo code is exclusively for ' + promo.restrictClub + ' members. Please ensure you have selected the correct club, or contact Calum directly if you believe this is an error.';
+          errorEl.style.display = 'block';
+          return;
+        }
+      }
+      appliedPromo = { code, ...promo };
+      if (appliedPromo.type === 'free_service') {
+        const alreadyIn = selectedSvcs.find(s => s.id === 'promo_free');
+        if (!alreadyIn) selectedSvcs.push({ id: 'promo_free', price: 0, name: appliedPromo.service + ' (FREE – promo)' });
+      }
+      successEl.textContent = '✓ ' + appliedPromo.label;
+      successEl.style.display = 'block';
+      document.getElementById('promo-applied-text').textContent = 'Code: ' + code + ' — ' + appliedPromo.label;
+      appliedEl.style.display = 'flex';
+      document.getElementById('promo-input').disabled = true;
+    } else {
+      errorEl.textContent = 'Invalid promo code. Please check and try again.';
+      errorEl.style.display = 'block';
+      appliedPromo = null;
+    }
+    updateSummary('sum2');
+  }
+
+  function onClubChange() {
+    if (!appliedPromo || !appliedPromo.restrictClub) return;
+    const selectedClub = document.getElementById('f-club').value;
+    if (selectedClub !== appliedPromo.restrictClub) {
+      const clubName = appliedPromo.restrictClub;
+      if (appliedPromo.type === 'free_service') {
+        selectedSvcs = selectedSvcs.filter(s => s.id !== 'promo_free');
+      }
+      appliedPromo = null;
+      document.getElementById('promo-input').value = '';
+      document.getElementById('promo-input').disabled = false;
+      document.getElementById('promo-success').style.display = 'none';
+      document.getElementById('promo-applied').style.display = 'none';
+      const errorEl = document.getElementById('promo-error');
+      errorEl.textContent = 'Your promo code was removed — it is exclusively for ' + clubName + ' members and the selected club doesn\'t match.';
+      errorEl.style.display = 'block';
+      updateSummary('sum2');
+      updateSummary('sum3');
+    }
+  }
+
+  function removePromo() {
+    if (appliedPromo && appliedPromo.type === 'free_service') {
+      selectedSvcs = selectedSvcs.filter(s => s.id !== 'promo_free');
+    }
+    appliedPromo = null;
+    document.getElementById('promo-input').value = '';
+    document.getElementById('promo-input').disabled = false;
+    document.getElementById('promo-success').style.display = 'none';
+    document.getElementById('promo-error').style.display = 'none';
+    document.getElementById('promo-applied').style.display = 'none';
+    updateSummary('sum2');
+  }
+
+  function toggleSvc(el) {
+    const id = el.dataset.id, price = parseFloat(el.dataset.price), name = el.dataset.name;
+    const idx = selectedSvcs.findIndex(s => s.id === id);
+    if (idx > -1) { selectedSvcs.splice(idx, 1); el.classList.remove('selected'); }
+    else { selectedSvcs.push({ id, price, name }); el.classList.add('selected'); }
+    document.getElementById('btn1').disabled = selectedSvcs.length === 0;
+  }
+
+  function toggleSeason(el) {
+    const id = el.dataset.id, price = parseFloat(el.dataset.price), name = el.dataset.name;
+    const seasonIds = ['bronze', 'silver', 'gold_season'];
+    if (selectedSvcs.find(s => seasonIds.includes(s.id))) {
+      document.querySelectorAll('.season-card').forEach(c => c.classList.remove('selected'));
+      selectedSvcs = selectedSvcs.filter(s => !seasonIds.includes(s.id));
+    }
+    const idx = selectedSvcs.findIndex(s => s.id === id);
+    if (idx > -1) { selectedSvcs.splice(idx, 1); el.classList.remove('selected'); }
+    else { selectedSvcs.push({ id, price, name }); el.classList.add('selected'); }
+    document.getElementById('btn1').disabled = selectedSvcs.length === 0;
+  }
+
+  function toggleMedia(el) {
+    const id = el.dataset.id, price = parseFloat(el.dataset.price), name = el.dataset.name;
+    const mediaIds = ['media_essential', 'media_standard', 'media_premium', 'media_elite'];
+    if (selectedSvcs.find(s => mediaIds.includes(s.id))) {
+      document.querySelectorAll('.media-card').forEach(c => c.classList.remove('selected'));
+      selectedSvcs = selectedSvcs.filter(s => !mediaIds.includes(s.id));
+    }
+    const idx = selectedSvcs.findIndex(s => s.id === id);
+    if (idx > -1) { selectedSvcs.splice(idx, 1); el.classList.remove('selected'); }
+    else { selectedSvcs.push({ id, price, name }); el.classList.add('selected'); }
+    document.getElementById('btn1').disabled = selectedSvcs.length === 0;
+  }
+
+  function toggleAddon(el) {
+    const id = el.dataset.id, price = parseFloat(el.dataset.price) || 0, pct = parseFloat(el.dataset.pct) || 0, name = el.dataset.name;
+    const idx = selectedAddons.findIndex(a => a.id === id);
+    if (idx > -1) { selectedAddons.splice(idx, 1); el.classList.remove('selected'); }
+    else { selectedAddons.push({ id, price, pct, name }); el.classList.add('selected'); }
+    updateSummary('sum2');
+  }
+
+  function calcTravel() {
+    const venueSelect = document.getElementById('f-venue');
+    const venueVal = venueSelect ? venueSelect.value : '';
+    let matchedMiles = 0;
+    for (const [name, miles] of Object.entries(VENUE_MILES)) {
+      if (venueVal && venueVal.startsWith(name)) { matchedMiles = miles; break; }
+    }
+    travelCost = parseFloat((Math.max(0, matchedMiles - 5) * 0.45).toFixed(2));
+    const costEl = document.getElementById('travel-cost');
+    const descEl = document.getElementById('travel-desc');
+    if (costEl) costEl.textContent = '£' + travelCost.toFixed(2);
+    if (descEl) {
+      if (!venueVal || venueVal === 'Other – please state in additional notes') {
+        descEl.textContent = 'Select a venue on page 3 to calculate travel automatically';
+      } else if (matchedMiles === 0) {
+        descEl.textContent = 'Braehead Arena — no travel charge';
+      } else {
+        descEl.textContent = venueVal + ' — approx ' + matchedMiles + ' miles from Braehead';
+      }
+    }
+    updateSummary('sum2');
+    updateSummary('sum3');
+  }
+
+  function getTotal() {
+    let base = selectedSvcs.filter(s => s.id !== 'promo_free').reduce((a, s) => a + s.price, 0);
+    let addons = 0;
+    selectedAddons.forEach(a => { addons += a.pct ? (base * a.pct / 100) : a.price; });
+    let subtotal = base + addons + travelCost;
+    if (appliedPromo && appliedPromo.type === 'percent') {
+      subtotal = subtotal * (1 - appliedPromo.value / 100);
+    }
+    return subtotal;
+  }
+
+  function updateSummary(id) {
+    const el = document.getElementById(id); if (!el) return;
+    let html = '';
+    selectedSvcs.forEach(s => { html += `<div class="sum-line"><span>${s.name}</span><span>£${s.price.toFixed(2)}</span></div>`; });
+    const base = selectedSvcs.reduce((a, s) => a + s.price, 0);
+    selectedAddons.forEach(a => { const v = a.pct ? (base * a.pct / 100) : a.price; html += `<div class="sum-line"><span>${a.name}</span><span>+£${v.toFixed(2)}</span></div>`; });
+    if (travelCost > 0) html += `<div class="sum-line"><span>Travel</span><span>+£${travelCost.toFixed(2)}</span></div>`;
+    if (appliedPromo && appliedPromo.type === 'percent') {
+      html += `<div class="sum-line" style="color:#6FCF97;"><span>Promo: ${appliedPromo.code}</span><span>-${appliedPromo.value}%</span></div>`;
+    }
+    html += `<div class="sum-line sum-total"><span>Estimated total</span><span class="sv">£${getTotal().toFixed(2)}</span></div>`;
+    el.innerHTML = html;
+  }
+
+  function checkDate() {
+    const val = document.getElementById('f-date').value;
+    document.getElementById('date-notice').style.display = val ? 'block' : 'none';
+  }
+
+  function markViewed() {
+    contractViewed = true;
+    const link = document.getElementById('contract-link');
+    link.classList.add('viewed'); link.textContent = '✓ Contract Viewed';
+    document.getElementById('contract-agree').disabled = false;
+  }
+
+  function checkContractAgreement() {
+    const depositOk = document.getElementById('deposit-confirm').checked;
+    const contractOk = contractViewed && document.getElementById('contract-agree').checked;
+    document.getElementById('btn3').disabled = !(depositOk && contractOk);
+    document.getElementById('contract-warn').style.display = 'none';
+  }
+
+  function goTo(step) {
+    document.querySelectorAll('.sec').forEach((s, i) => s.classList.toggle('active', i === step - 1));
+    document.querySelectorAll('.step').forEach((s, i) => {
+      s.classList.remove('active', 'done');
+      if (i < step - 1) s.classList.add('done');
+      if (i === step - 1) s.classList.add('active');
+    });
+    if (step === 2) updateSummary('sum2');
+    if (step === 3) updateSummary('sum3');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  async function submitBooking() {
+    if (!contractViewed || !document.getElementById('contract-agree').checked) {
+      document.getElementById('contract-warn').style.display = 'block'; return;
+    }
+    const first = document.getElementById('f-first').value.trim();
+    const last = document.getElementById('f-last').value.trim();
+    const email = document.getElementById('f-email').value.trim();
+    const phone = document.getElementById('f-phone').value.trim();
+    const date = document.getElementById('f-date').value;
+    const venue = document.getElementById('f-venue').value;
+    if (!first || !email) { alert('Please enter your name and email to continue.'); return; }
+    if (!phone) { alert('Please enter a phone number so Calum can contact you to confirm your booking.'); return; }
+    if (!date) { alert('Please select a preferred date.'); return; }
+    if (!venue) { alert('Please select a venue.'); return; }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) { alert('Please enter a valid email address.'); return; }
+    if (appliedPromo && appliedPromo.restrictClub) {
+      const clubNow = document.getElementById('f-club').value;
+      if (clubNow !== appliedPromo.restrictClub) {
+        alert('Your promo code is only valid for ' + appliedPromo.restrictClub + ' — please update your club selection or remove the code before submitting.');
+        return;
+      }
+    }
+    if (document.getElementById('f-website').value.trim() !== '') {
+      // Honeypot field caught a bot — silently abort without sending or alerting.
+      return;
+    }
+
+    document.getElementById('error-msg').style.display = 'none';
+    document.getElementById('sending-overlay').classList.add('show');
+    document.getElementById('btn3').disabled = true;
+
+    const base = selectedSvcs.reduce((a, s) => a + s.price, 0);
+    const addonsText = selectedAddons.length ? selectedAddons.map(a => {
+      const v = a.pct ? (base * a.pct / 100) : a.price;
+      return `${a.name} (+£${v.toFixed(2)})`;
+    }).join(', ') : 'None';
+
+    const params = {
+      client_name: `${first} ${last}`.trim(),
+      client_email: email,
+      client_phone: phone,
+      client_club: document.getElementById('f-club').value || 'Not specified',
+      client_date: document.getElementById('f-date').value || 'Not specified',
+      client_venue: document.getElementById('f-venue').value || 'Not specified',
+      services: selectedSvcs.map(s => `${s.name} (£${s.price.toFixed(2)})`).join(', '),
+      addons: addonsText,
+      travel: travelCost > 0 ? `£${travelCost.toFixed(2)} (${document.getElementById('f-venue').value})` : 'None',
+      total: `£${getTotal().toFixed(2)}`,
+      client_notes: document.getElementById('f-notes').value.trim() || 'None',
+      client_time: document.getElementById('f-time').value || 'Not specified',
+      client_source: document.getElementById('f-source').value || 'Not specified',
+      client_contact: document.getElementById('f-contact').value || 'No preference',
+      promo_code: appliedPromo ? appliedPromo.code + ' (' + appliedPromo.label + ')' : 'None'
+    };
+
+    try {
+      await emailjs.send("service_3ccccx5", "template_05ft4c3", params);
+      await emailjs.send("service_3ccccx5", "template_6xjli5e", params);
+      document.getElementById('sending-overlay').classList.remove('show');
+      document.getElementById('conf-name').textContent = first;
+      document.getElementById('conf-email').textContent = email;
+      let html = `<b style="color:var(--gold)">Services:</b> ${selectedSvcs.map(s => s.name).join(', ')}<br>`;
+      if (params.client_club !== 'Not specified') html += `<b style="color:var(--gold)">Club:</b> ${params.client_club}<br>`;
+      if (params.client_date !== 'Not specified') html += `<b style="color:var(--gold)">Requested date:</b> ${params.client_date}<br>`;
+      if (params.client_venue !== 'Not specified') html += `<b style="color:var(--gold)">Venue:</b> ${params.client_venue}<br>`;
+      if (selectedAddons.length) html += `<b style="color:var(--gold)">Add-ons:</b> ${selectedAddons.map(a => a.name).join(', ')}<br>`;
+      if (params.client_notes !== 'None') html += `<b style="color:var(--gold)">Notes:</b> ${params.client_notes}<br>`;
+      html += `<b style="color:var(--gold)">Estimated total:</b> £${getTotal().toFixed(2)}`;
+      document.getElementById('conf-summary').innerHTML = html;
+      goTo(4);
+    } catch (err) {
+      document.getElementById('sending-overlay').classList.remove('show');
+      document.getElementById('btn3').disabled = false;
+      document.getElementById('error-msg').style.display = 'block';
+      console.error('EmailJS error:', err);
+    }
+  }
+</script>
+<div style="background:var(--dark);border-top:1px solid var(--border);padding:2.5rem 2rem;margin-top:2rem;">
+  <div style="max-width:700px;margin:0 auto;">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.12em;color:var(--gold);margin-bottom:1.2rem;text-align:center;">Frequently Asked Questions</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+
+      <div style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+        <button onclick="toggleFaq(this)" style="width:100%;background:none;border:none;padding:.9rem 1.1rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;color:var(--text);font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:500;text-align:left;">
+          What happens after I submit my enquiry?
+          <span style="color:var(--gold);font-size:1rem;transition:transform .2s;">+</span>
+        </button>
+        <div style="display:none;padding:0 1.1rem .9rem;font-size:.78rem;color:var(--muted);line-height:1.7;">
+          Calum will review your enquiry and get back to you within 48 hours to confirm availability and discuss your requirements. Once confirmed, you'll receive a deposit invoice — your date is secured once the 50% deposit is paid and the contract is signed and returned.
+        </div>
+      </div>
+
+      <div style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+        <button onclick="toggleFaq(this)" style="width:100%;background:none;border:none;padding:.9rem 1.1rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;color:var(--text);font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:500;text-align:left;">
+          When and how do I pay?
+          <span style="color:var(--gold);font-size:1rem;transition:transform .2s;">+</span>
+        </button>
+        <div style="display:none;padding:0 1.1rem .9rem;font-size:.78rem;color:var(--muted);line-height:1.7;">
+          A 50% non-refundable deposit is required to secure your booking. The remaining balance is due no later than 7 days before the shoot date. Payment is by bank transfer — details are provided on your invoice.
+        </div>
+      </div>
+
+      <div style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+        <button onclick="toggleFaq(this)" style="width:100%;background:none;border:none;padding:.9rem 1.1rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;color:var(--text);font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:500;text-align:left;">
+          How are my images delivered?
+          <span style="color:var(--gold);font-size:1rem;transition:transform .2s;">+</span>
+        </button>
+        <div style="display:none;padding:0 1.1rem .9rem;font-size:.78rem;color:var(--muted);line-height:1.7;">
+          Edited galleries are delivered via an online gallery link or file transfer service within 5 working days of the shoot. Rush delivery (within 48 hours) is available as a paid add-on. You'll receive high-resolution files suitable for print and social media.
+        </div>
+      </div>
+
+      <div style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+        <button onclick="toggleFaq(this)" style="width:100%;background:none;border:none;padding:.9rem 1.1rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;color:var(--text);font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:500;text-align:left;">
+          Can I use the images on social media and the club website?
+          <span style="color:var(--gold);font-size:1rem;transition:transform .2s;">+</span>
+        </button>
+        <div style="display:none;padding:0 1.1rem .9rem;font-size:.78rem;color:var(--muted);line-height:1.7;">
+          Yes — all delivered images are licensed for club and social media use. We just ask that you credit @CalumForsythMedia when posting where possible. Commercial resale or third-party licensing is not permitted without prior written consent.
+        </div>
+      </div>
+
+      <div style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+        <button onclick="toggleFaq(this)" style="width:100%;background:none;border:none;padding:.9rem 1.1rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;color:var(--text);font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:500;text-align:left;">
+          What if my preferred date is not available?
+          <span style="color:var(--gold);font-size:1rem;transition:transform .2s;">+</span>
+        </button>
+        <div style="display:none;padding:0 1.1rem .9rem;font-size:.78rem;color:var(--muted);line-height:1.7;">
+          Submit your enquiry anyway and use the additional notes section to tell us your club and what you're looking for. It's worth noting that both home and away teams can book coverage of the same fixture — Calum may be able to accommodate both clubs at the same game.
+        </div>
+      </div>
+
+      <div style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+        <button onclick="toggleFaq(this)" style="width:100%;background:none;border:none;padding:.9rem 1.1rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;color:var(--text);font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:500;text-align:left;">
+          Do you cover sports other than ice hockey?
+          <span style="color:var(--gold);font-size:1rem;transition:transform .2s;">+</span>
+        </button>
+        <div style="display:none;padding:0 1.1rem .9rem;font-size:.78rem;color:var(--muted);line-height:1.7;">
+          Yes — Calum Forsyth Media offers half and full day call-out packages for any sport including gymnastics, combat sports, baseball, and more. Media days for other sports are also available on request. Get in touch to discuss your requirements.
+        </div>
+      </div>
+
+      <div style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+        <button onclick="toggleFaq(this)" style="width:100%;background:none;border:none;padding:.9rem 1.1rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;color:var(--text);font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:500;text-align:left;">
+          I am not sure which package is right for me
+          <span style="color:var(--gold);font-size:1rem;transition:transform .2s;">+</span>
+        </button>
+        <div style="display:none;padding:0 1.1rem .9rem;font-size:.78rem;color:var(--muted);line-height:1.7;">
+          No problem at all — select your best guess and use the additional notes box to explain what you're looking for and your budget. Calum will get back to you with a recommendation tailored to your club's needs.
+        </div>
+      </div>
+
+    </div>
+
+    <div style="text-align:center;margin-top:1.5rem;font-size:.75rem;color:var(--muted);">
+      Still have a question? Email <a href="mailto:calumforsythphotography@gmail.com" style="color:var(--gold);text-decoration:none;">calumforsythphotography@gmail.com</a>
+    </div>
+
+  </div>
+</div>
+
+<div style="background:var(--dark);border-top:1px solid var(--border);padding:1rem 2rem;text-align:center;">
+  <div style="font-size:.65rem;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;">Calum Forsyth Media · Sports Photography · Graphics · Content</div>
+  <div style="font-size:.65rem;color:var(--muted);margin-top:.3rem;">calumforsythphotography@gmail.com</div>
+</div>
+
+</body>
+</html>
